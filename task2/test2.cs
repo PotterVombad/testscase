@@ -41,15 +41,11 @@ namespace tests
             foreach (var element in sortedDict)
             {
                 var word = string.Concat(Enumerable.Repeat("_", maxLengtWord - element.Key.Length)) + element.Key;
-                var dots = DotsRounding(mostUsedWord, element.Value);
+                var comparison = (double)element.Value / (double)mostUsedWord;
+                var dots = string.Concat(Enumerable.Repeat
+                    (".", (int)Math.Round(comparison * 10, MidpointRounding.AwayFromZero)));
                 Console.WriteLine(word + " " + dots);
             }
-        }
-        static string DotsRounding(int mostUsedWord, int repeat)
-        {
-            var comparison = (double)repeat / (double)mostUsedWord;
-            if (comparison * 100 % 5 == 0 && !(comparison % 1 == 0)) comparison += 0.05;
-            return string.Concat(Enumerable.Repeat(".", (int)Math.Round(comparison * 10)));
         }
     }
 }
