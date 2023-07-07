@@ -23,8 +23,8 @@ namespace tests
     }
     class HashTable
     {
-        public Array<int>[] values;
-        public int Divider;
+        public Array<int>[] values { get; private set; }
+        public int Divider { get; private set; }
         public HashTable(int n)
         {
             Divider = n;
@@ -60,8 +60,8 @@ namespace tests
 
     class ListNode<T>
     {
-        public T value;
-        public ListNode<T> next;
+        public T value { get; set; }
+        public ListNode<T> next { get; set; }
 
         public ListNode(T newValue)
         {
@@ -71,8 +71,8 @@ namespace tests
 
     class Array<T>
     {
-        public ListNode<T> head;
-        public ListNode<T> tail;
+        ListNode<T> head;
+        ListNode<T> tail;
 
         public void Add(T newVal)
         {
