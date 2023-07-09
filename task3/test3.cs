@@ -15,37 +15,23 @@ namespace tests
         }
         static int Calculate(string[] inputLine)
         { 
-            var res = new List<double>();
-            var counter = 0;
+            var operations = new Dictionary<string, Func<double, double, double>>();
+            operations.Add("+", (y, x) => x + y);
+            operations.Add("-", (y, x) => x - y);
+            operations.Add("*", (y, x) => x * y);
+            operations.Add("/", (y, x) => x / y);
+
+            var res = new Stack<double>();
             foreach (var line in inputLine)
             {    
                 if (double.TryParse(line, out double result))
-                {
-                    res.Add(result);
-                    counter++;
-                }
+                    res.Push(result);
+                else if (operations.ContainsKey(line))
+                    res.Push(operations[line](res.Pop(), res.Pop()));
                 else
-                {
-                    switch (line)
-                    {
-                        case ("+"):
-                            res[counter - 2] = res[counter - 2] + res[counter - 1];
-                            break;
-                        case ("-"):
-                            res[counter - 2] = res[counter - 2] - res[counter - 1];
-                            break;
-                        case ("*"):
-                            res[counter - 2] = res[counter - 2] * res[counter - 1];
-                            break;
-                        case ("/"):
-                            res[counter - 2] = res[counter - 2] / res[counter - 1];
-                            break;
-                    }
-                    res.RemoveAt(counter - 1);
-                    counter--;
-                }
+                    throw new ArgumentException();
             }
-            return (int)res[0];
+            return (int)res.Pop();
         }
     }
 }
